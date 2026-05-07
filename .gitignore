@@ -1,0 +1,40 @@
+# Логи
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Временные файлы
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Зависимости
+node_modules/
+bower_components/
+
+# Сборка
+dist/
+build/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Окружение
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Другое
+*.tmp
+*.temp

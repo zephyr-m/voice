@@ -1,10 +1,24 @@
-# План разметки голосового чат-интерфейса
+# План разметки голосового чат-интерфейса с Pico CSS
 
 ## Описание проекта
 Голосовой интерфейс в виде чат-мессенджера, где:
 - Пользователь говорит, речь сразу преобразуется в текст и отображается как сообщение
 - Любая модель (AI) может отвечать на сообщения
 - Интерфейс похож на современные мессенджеры (Telegram, WhatsApp) с голосовым вводом
+- **Используется Pico CSS** для минималистичных, семантических стилей
+
+## Pico CSS Интеграция
+Pico CSS - минималистичный CSS фреймворк, который обеспечивает:
+- Семантические стили для стандартных HTML элементов
+- Темную тему по умолчанию
+- Адаптивный дизайн
+- Минимальные кастомные CSS
+
+### Преимущества использования Pico CSS:
+1. Меньше кастомного CSS кода
+2. Согласованный внешний вид
+3. Улучшенная доступность
+4. Быстрая разработка
 
 ## Компоненты интерфейса
 
@@ -33,117 +47,129 @@
    - История диалогов
    - Настройки голоса
 
-## Структура HTML
+## Структура HTML с Pico CSS
 
 ```html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Голосовой чат-интерфейс</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Pico CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <!-- Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Минимальные кастомные стили -->
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
-    <div class="app-container">
+    <div class="container">
         <!-- Шапка -->
-        <header class="app-header">
-            <div class="header-left">
-                <h1><i class="fas fa-microphone-alt"></i> Голосовой чат</h1>
-                <span class="connection-status"><i class="fas fa-circle"></i> Подключено</span>
-            </div>
-            <div class="header-right">
-                <button class="btn-icon" id="settings-btn" title="Настройки">
-                    <i class="fas fa-cog"></i>
-                </button>
-                <button class="btn-icon" id="history-btn" title="История">
-                    <i class="fas fa-history"></i>
-                </button>
-            </div>
+        <header class="header">
+            <nav class="container-fluid">
+                <ul>
+                    <li><strong><i class="fas fa-microphone-alt"></i> Голосовой чат</strong></li>
+                </ul>
+                <ul>
+                    <li><span class="badge" id="connection-status"><i class="fas fa-circle"></i> Подключено</span></li>
+                    <li><button class="secondary" id="settings-btn" title="Настройки"><i class="fas fa-cog"></i></button></li>
+                    <li><button class="secondary" id="history-btn" title="История"><i class="fas fa-history"></i></button></li>
+                </ul>
+            </nav>
         </header>
 
         <!-- Основной контент -->
         <main class="main-content">
-            <!-- Боковая панель (опционально) -->
-            <aside class="sidebar" id="sidebar">
-                <div class="sidebar-section">
-                    <h3><i class="fas fa-robot"></i> Модель AI</h3>
-                    <select id="model-select">
-                        <option value="gpt-4">GPT-4</option>
-                        <option value="claude">Claude</option>
-                        <option value="gemini">Gemini</option>
-                        <option value="local">Локальная модель</option>
-                    </select>
-                </div>
-                <div class="sidebar-section">
-                    <h3><i class="fas fa-comments"></i> История</h3>
-                    <ul class="history-list" id="history-list">
-                        <li>Сегодня 10:30</li>
-                        <li>Вчера 15:45</li>
-                        <li>12 мая 2025</li>
-                    </ul>
-                </div>
-            </aside>
+            <div class="grid">
+                <!-- Боковая панель -->
+                <aside class="sidebar">
+                    <article>
+                        <header><h4><i class="fas fa-robot"></i> Модель AI</h4></header>
+                        <select id="model-select">
+                            <option value="gpt-4">GPT-4</option>
+                            <option value="claude">Claude</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="local">Локальная модель</option>
+                        </select>
+                    </article>
+                    
+                    <article>
+                        <header><h4><i class="fas fa-comments"></i> История</h4></header>
+                        <ul id="history-list">
+                            <li><a href="#" class="secondary">Сегодня 10:30</a></li>
+                            <li><a href="#" class="secondary">Вчера 15:45</a></li>
+                            <li><a href="#" class="secondary">12 мая 2025</a></li>
+                        </ul>
+                    </article>
+                </aside>
 
-            <!-- Область чата -->
-            <section class="chat-area">
-                <div class="chat-messages" id="chat-messages">
-                    <!-- Сообщения будут добавляться динамически -->
-                    <div class="message ai-message">
-                        <div class="message-avatar">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="message-content">
+                <!-- Область чата -->
+                <section class="chat-area">
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Сообщения будут добавляться динамически -->
+                        <article class="message ai-message">
+                            <header>
+                                <div class="message-header">
+                                    <i class="fas fa-robot"></i>
+                                    <strong>AI Ассистент</strong>
+                                    <small>10:00</small>
+                                </div>
+                            </header>
                             <p>Привет! Я ваш голосовой помощник. Нажмите на микрофон и говорите.</p>
-                            <span class="message-time">10:00</span>
-                        </div>
-                    </div>
-                    <div class="message user-message">
-                        <div class="message-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="message-content">
+                        </article>
+                        
+                        <article class="message user-message">
+                            <header>
+                                <div class="message-header">
+                                    <i class="fas fa-user"></i>
+                                    <strong>Вы</strong>
+                                    <small>10:01</small>
+                                </div>
+                            </header>
                             <p>Привет, как дела?</p>
-                            <span class="message-time">10:01</span>
-                        </div>
+                        </article>
                     </div>
-                </div>
 
-                <!-- Панель ввода -->
-                <div class="input-panel">
-                    <div class="input-group">
-                        <button class="btn-microphone" id="microphone-btn">
-                            <i class="fas fa-microphone"></i>
-                            <span class="btn-text">Говорите</span>
-                        </button>
-                        <div class="recording-indicator" id="recording-indicator">
-                            <div class="wave"></div>
-                            <div class="wave"></div>
-                            <div class="wave"></div>
+                    <!-- Панель ввода -->
+                    <div class="input-panel">
+                        <div class="grid">
+                            <div class="input-group">
+                                <button class="primary" id="microphone-btn">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Говорите</span>
+                                </button>
+                                <div class="recording-indicator" id="recording-indicator">
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                </div>
+                                <input type="text" id="text-input" placeholder="Или введите текст вручную...">
+                                <button class="secondary" id="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
                         </div>
-                        <input type="text" id="text-input" placeholder="Или введите текст вручную...">
-                        <button class="btn-send" id="send-btn">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                        
+                        <div class="grid">
+                            <div class="input-options">
+                                <label>
+                                    <input type="checkbox" id="voice-toggle" checked role="switch">
+                                    Голосовой режим
+                                </label>
+                                <button class="outline" id="clear-btn">
+                                    <i class="fas fa-trash"></i> Очистить
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-options">
-                        <label class="switch">
-                            <input type="checkbox" id="voice-toggle" checked>
-                            <span class="slider"></span>
-                            <span class="switch-label">Голосовой режим</span>
-                        </label>
-                        <button class="btn-small" id="clear-btn">
-                            <i class="fas fa-trash"></i> Очистить
-                        </button>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
 
         <!-- Футер -->
-        <footer class="app-footer">
-            <p>Голосовой интерфейс &copy; 2025 | Используется Web Speech API</p>
+        <footer class="footer">
+            <small>Голосовой интерфейс &copy; 2025 | Используется Web Speech API</small>
         </footer>
     </div>
 
@@ -152,13 +178,13 @@
 </html>
 ```
 
-## Структура каталогов проекта
+## Структура каталогов проекта (упрощенная)
 
 ```
 voice-interface/
 ├── index.html
 ├── css/
-│   └── styles.css
+│   └── custom.css          # Минимальные кастомные стили
 ├── js/
 │   └── app.js
 ├── assets/
@@ -170,264 +196,142 @@ voice-interface/
 └── README.md
 ```
 
-## Базовые CSS стили
+## Минимальные кастомные CSS стили (custom.css)
 
 ```css
-/* styles.css - базовые стили для голосового чат-интерфейса */
+/* custom.css - минимальные кастомные стили для голосового чат-интерфейса */
 
-/* Сброс и базовые стили */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Переменные для цветов */
+:root {
+    --ai-color: #7b1fa2;
+    --user-color: #0277bd;
+    --recording-color: #f44336;
 }
 
-body {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: #e0e0e0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.app-container {
-    width: 100%;
+/* Общие стили для контейнера */
+.container {
     max-width: 1400px;
-    height: 90vh;
-    background: rgba(25, 25, 35, 0.9);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
 /* Шапка */
-.app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background: rgba(40, 40, 60, 0.8);
-    border-bottom: 1px solid #444;
+.header nav {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--pico-border-color);
 }
 
-.header-left h1 {
-    font-size: 1.8rem;
-    color: #4fc3f7;
-}
-
-.header-left h1 i {
-    margin-right: 10px;
-}
-
-.connection-status {
-    font-size: 0.9rem;
-    color: #81c784;
-    margin-left: 15px;
-}
-
-.connection-status i {
-    font-size: 0.7rem;
-    margin-right: 5px;
-}
-
-.header-right {
-    display: flex;
-    gap: 15px;
-}
-
-.btn-icon {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #b0b0b0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.3s;
-}
-
-.btn-icon:hover {
-    background: rgba(79, 195, 247, 0.3);
-    color: #4fc3f7;
-    transform: scale(1.1);
+.badge {
+    background-color: var(--pico-success-background-color);
+    color: var(--pico-success-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
 }
 
 /* Основной контент */
 .main-content {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        display: none;
+    }
 }
 
 /* Боковая панель */
-.sidebar {
-    width: 250px;
-    background: rgba(30, 30, 45, 0.9);
-    border-right: 1px solid #444;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.sidebar-section {
-    margin-bottom: 30px;
-}
-
-.sidebar-section h3 {
-    color: #bb86fc;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-}
-
-.sidebar-section select {
-    width: 100%;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #555;
-    border-radius: 8px;
-    color: #e0e0e0;
-    font-size: 1rem;
-}
-
-.history-list {
-    list-style: none;
-}
-
-.history-list li {
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    margin-bottom: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.history-list li:hover {
-    background: rgba(79, 195, 247, 0.2);
+.sidebar article {
+    margin-bottom: 1.5rem;
 }
 
 /* Область чата */
 .chat-area {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    height: 70vh;
 }
 
 .chat-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
-    background: rgba(20, 20, 30, 0.7);
-    border-radius: 15px;
-    margin-bottom: 20px;
+    padding: 1rem;
+    background-color: var(--pico-background-color);
+    border-radius: var(--pico-border-radius);
+    border: 1px solid var(--pico-border-color);
+    margin-bottom: 1rem;
 }
 
+/* Сообщения */
 .message {
-    display: flex;
-    margin-bottom: 25px;
-    max-width: 80%;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: var(--pico-border-radius);
+    border: 1px solid var(--pico-border-color);
 }
 
 .ai-message {
-    align-self: flex-start;
+    background-color: color-mix(in srgb, var(--ai-color) 10%, transparent);
+    border-left: 4px solid var(--ai-color);
 }
 
 .user-message {
-    align-self: flex-end;
-    flex-direction: row-reverse;
+    background-color: color-mix(in srgb, var(--user-color) 10%, transparent);
+    border-right: 4px solid var(--user-color);
+    margin-left: auto;
+    max-width: 80%;
 }
 
-.message-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #3f51b5;
+.message-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    margin: 0 15px;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.ai-message .message-avatar {
-    background: #7b1fa2;
+.message-header i {
+    font-size: 1.25rem;
 }
 
-.user-message .message-avatar {
-    background: #0277bd;
-}
-
-.message-content {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 15px;
-    position: relative;
-    max-width: 100%;
-}
-
-.ai-message .message-content {
-    background: rgba(123, 31, 162, 0.3);
-    border-top-left-radius: 5px;
-}
-
-.user-message .message-content {
-    background: rgba(2, 119, 189, 0.3);
-    border-top-right-radius: 5px;
-}
-
-.message-content p {
-    margin-bottom: 8px;
-    line-height: 1.5;
-}
-
-.message-time {
-    font-size: 0.8rem;
-    color: #aaa;
-    display: block;
-    text-align: right;
+.message-header small {
+    margin-left: auto;
+    opacity: 0.7;
 }
 
 /* Панель ввода */
 .input-panel {
-    background: rgba(40, 40, 60, 0.8);
-    padding: 20px;
-    border-radius: 15px;
+    background-color: var(--pico-background-color);
+    padding: 1rem;
+    border-radius: var(--pico-border-radius);
+    border: 1px solid var(--pico-border-color);
 }
 
 .input-group {
     display: flex;
+    gap: 0.75rem;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
-.btn-microphone {
-    background: linear-gradient(135deg, #ff4081, #f50057);
-    border: none;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    cursor: pointer;
+#microphone-btn {
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: all 0.3s;
+    gap: 0.5rem;
+    min-width: 120px;
 }
 
-.btn-microphone:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
-}
-
-.btn-microphone.recording {
-    background: linear-gradient(135deg, #f44336, #d32f2f);
+#microphone-btn.recording {
+    background-color: var(--recording-color);
     animation: pulse 1.5s infinite;
 }
 
@@ -440,7 +344,7 @@ body {
 .recording-indicator {
     display: none;
     align-items: center;
-    gap: 5px;
+    gap: 0.25rem;
 }
 
 .recording-indicator.active {
@@ -448,10 +352,10 @@ body {
 }
 
 .wave {
-    width: 6px;
-    height: 20px;
-    background: #ff4081;
-    border-radius: 3px;
+    width: 4px;
+    height: 16px;
+    background-color: var(--recording-color);
+    border-radius: 2px;
     animation: wave 1s ease-in-out infinite;
 }
 
@@ -459,40 +363,12 @@ body {
 .wave:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes wave {
-    0%, 100% { height: 10px; }
-    50% { height: 20px; }
+    0%, 100% { height: 8px; }
+    50% { height: 16px; }
 }
 
 #text-input {
     flex: 1;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #555;
-    border-radius: 10px;
-    color: #e0e0e0;
-    font-size: 1rem;
-}
-
-#text-input:focus {
-    outline: none;
-    border-color: #4fc3f7;
-}
-
-.btn-send {
-    background: #4fc3f7;
-    border: none;
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-send:hover {
-    background: #29b6f6;
-    transform: rotate(15deg);
 }
 
 .input-options {
@@ -501,117 +377,13 @@ body {
     align-items: center;
 }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #555;
-    transition: .4s;
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #4fc3f7;
-}
-
-input:checked + .slider:before {
-    transform: translateX(30px);
-}
-
-.switch-label {
-    margin-left: 10px;
-    font-size: 0.9rem;
-}
-
-.btn-small {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #666;
-    color: #e0e0e0;
-    padding: 8px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-}
-
-.btn-small:hover {
-    background: rgba(244, 67, 54, 0.3);
-    border-color: #f44336;
-}
-
 /* Футер */
-.app-footer {
+.footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--pico-border-color);
     text-align: center;
-    padding: 15px;
-    background: rgba(40, 40, 60, 0.8);
-    border-top: 1px solid #444;
-    font-size: 0.9rem;
-    color: #aaa;
-}
-
-/* Адаптивность */
-@media (max-width: 1024px) {
-    .sidebar {
-        width: 200px;
-    }
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-    
-    .message {
-        max-width: 90%;
-    }
-    
-    .input-group {
-        flex-wrap: wrap;
-    }
-    
-    .btn-microphone {
-        order: 1;
-        flex: 1;
-    }
-    
-    #text-input {
-        order: 2;
-        width: 100%;
-        margin-top: 10px;
-    }
-    
-    .btn-send {
-        order: 3;
-        margin-top: 10px;
-    }
+    opacity: 0.7;
 }
 ```
 
@@ -630,7 +402,7 @@ input:checked + .slider:before {
 # Инициализация Git репозитория
 git init
 git add .
-git commit -m "Initial commit: голосовой чат-интерфейс"
+git commit -m "Initial commit: голосовой чат-интерфейс с Pico CSS"
 
 # Установка GitFlow (если не установлен)
 # Для Linux:
@@ -640,16 +412,10 @@ sudo apt-get install git-flow
 git flow init -d
 
 # Создание ветки для разработки интерфейса
-git flow feature start voice-ui
+git flow feature start voice-ui-pico
 
 # После завершения работы над фичей
-git flow feature finish voice-ui
-
-# Создание релизной ветки
-git flow release start 1.0.0
-
-# Завершение релиза
-git flow release finish 1.0.0
+git flow feature finish voice-ui-pico
 ```
 
 ### Файл .gitignore
@@ -697,30 +463,6 @@ out/
 *.temp
 ```
 
-### Скрипт инициализации проекта (setup.sh)
-
-```bash
-#!/bin/bash
-
-echo "Настройка проекта голосового интерфейса..."
-
-# Создание структуры каталогов
-mkdir -p css js assets/icons assets/sounds plans
-
-# Создание файлов
-touch index.html css/styles.css js/app.js README.md .gitignore
-
-# Инициализация Git
-git init
-git flow init -d
-
-# Установка начального коммита
-git add .
-git commit -m "Initial project structure"
-
-echo "Проект готов к работе!"
-```
-
 ## Следующие шаги
 
 ### 1. Создать структуру каталогов
@@ -731,7 +473,7 @@ cd voice-interface
 
 ### 2. Написать файл `index.html` с приведенной выше разметкой
 
-### 3. Создать базовые CSS стили в `css/styles.css`
+### 3. Создать минимальные CSS стили в `css/custom.css`
 
 ### 4. Написать минимальный JavaScript для управления голосовым вводом
 Примерный план для `js/app.js`:
@@ -747,12 +489,20 @@ cd voice-interface
 ### 6. Добавить документацию по развертыванию
 Создать `README.md` с инструкциями по запуску и развертыванию
 
+## Преимущества использования Pico CSS для этого проекта
+
+1. **Минимализм**: Pico CSS предоставляет чистые, семантические стили без излишеств
+2. **Темная тема по умолчанию**: Идеально подходит для голосового интерфейса
+3. **Адаптивность**: Встроенная адаптивная сетка и компоненты
+4. **Доступность**: Улучшенная доступность из коробки
+5. **Быстрая разработка**: Меньше времени на стилизацию, больше на функциональность
+
 ## Диаграмма компонентов
 
 ```mermaid
 flowchart TD
-    A[Голосовой чат-интерфейс] --> B[Шапка]
-    A --> C[Основной контент]
+    A[Голосовой чат-интерфейс с Pico CSS] --> B[Шапка с навигацией]
+    A --> C[Основной контент с сеткой]
     A --> D[Футер]
     
     C --> E[Боковая панель]
@@ -770,35 +520,5 @@ flowchart TD
     G --> N[Индикатор записи]
 ```
 
-## Диаграмма GitFlow
-
-```mermaid
-gitGraph
-    commit id: "init"
-    branch develop
-    checkout develop
-    commit id: "base structure"
-    branch feature/voice-ui
-    checkout feature/voice-ui
-    commit id: "html markup"
-    commit id: "css styles"
-    checkout develop
-    merge feature/voice-ui id: "merge voice-ui"
-    branch release/1.0.0
-    checkout release/1.0.0
-    commit id: "bug fixes"
-    checkout main
-    merge release/1.0.0 id: "release 1.0.0"
-    checkout develop
-    merge release/1.0.0 id: "merge back"
-    branch hotfix/login-bug
-    checkout hotfix/login-bug
-    commit id: "fix auth"
-    checkout main
-    merge hotfix/login-bug id: "hotfix deploy"
-    checkout develop
-    merge hotfix/login-bug id: "hotfix to develop"
-```
-
 ## Заключение
-План содержит полную разметку для голосового чат-интерфейса, включая HTML структуру, CSS стили, организацию проекта и GitFlow конфигурацию. Следующим шагом является реализация этого плана в режиме Code.
+План содержит полную разметку для голосового чат-интерфейса с использованием Pico CSS. Этот подход обеспечивает минималистичный, семантический и доступный интерфейс с минимальными кастомными CSS. Следующим шагом является реализация этого плана в режиме Code.

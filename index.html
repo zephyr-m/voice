@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голосовой чат-интерфейс</title>
+    <!-- Pico CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Минимальные кастомные стили -->
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <header class="header">
+            <nav class="container-fluid">
+                <ul>
+                    <li><strong><i class="fas fa-microphone-alt"></i> Голосовой чат</strong></li>
+                </ul>
+                <ul>
+                    <li><span class="badge" id="connection-status"><i class="fas fa-circle"></i> Подключено</span></li>
+                    <li><button class="secondary" id="settings-btn" title="Настройки"><i class="fas fa-cog"></i></button></li>
+                    <li><button class="secondary" id="history-btn" title="История"><i class="fas fa-history"></i></button></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="grid">
+                <!-- Боковая панель -->
+                <aside class="sidebar">
+                    <article>
+                        <header><h4><i class="fas fa-robot"></i> Модель AI</h4></header>
+                        <select id="model-select">
+                            <option value="gpt-4">GPT-4</option>
+                            <option value="claude">Claude</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="local">Локальная модель</option>
+                        </select>
+                    </article>
+                    
+                    <article>
+                        <header><h4><i class="fas fa-comments"></i> История</h4></header>
+                        <ul id="history-list">
+                            <li><a href="#" class="secondary">Сегодня 10:30</a></li>
+                            <li><a href="#" class="secondary">Вчера 15:45</a></li>
+                            <li><a href="#" class="secondary">12 мая 2025</a></li>
+                        </ul>
+                    </article>
+                </aside>
+
+                <!-- Область чата -->
+                <section class="chat-area">
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Сообщения будут добавляться динамически -->
+                        <article class="message ai-message">
+                            <header>
+                                <div class="message-header">
+                                    <i class="fas fa-robot"></i>
+                                    <strong>AI Ассистент</strong>
+                                    <small>10:00</small>
+                                </div>
+                            </header>
+                            <p>Привет! Я ваш голосовой помощник. Нажмите на микрофон и говорите.</p>
+                        </article>
+                        
+                        <article class="message user-message">
+                            <header>
+                                <div class="message-header">
+                                    <i class="fas fa-user"></i>
+                                    <strong>Вы</strong>
+                                    <small>10:01</small>
+                                </div>
+                            </header>
+                            <p>Привет, как дела?</p>
+                        </article>
+                    </div>
+
+                    <!-- Панель ввода -->
+                    <div class="input-panel">
+                        <div class="grid">
+                            <div class="input-group">
+                                <button class="primary" id="microphone-btn">
+                                    <i class="fas fa-microphone"></i>
+                                    <span>Говорите</span>
+                                </button>
+                                <div class="recording-indicator" id="recording-indicator">
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                </div>
+                                <input type="text" id="text-input" placeholder="Или введите текст вручную...">
+                                <button class="secondary" id="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid">
+                            <div class="input-options">
+                                <label>
+                                    <input type="checkbox" id="voice-toggle" checked role="switch">
+                                    Голосовой режим
+                                </label>
+                                <button class="outline" id="clear-btn">
+                                    <i class="fas fa-trash"></i> Очистить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <small>Голосовой интерфейс &copy; 2025 | Используется Web Speech API</small>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
